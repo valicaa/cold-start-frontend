@@ -6,10 +6,16 @@ import Link from "next/link";
 
 import { Eip1193Provider } from "ethers";
 
+interface MetaMaskEip1193Provider extends Eip1193Provider {
+  on(event: 'accountsChanged', listener: (accounts: string[]) => void): this;
+  removeListener(event: 'accountsChanged', listener: (accounts: string[]) => void): this;
+  // We could also add 'chainChanged' listener definition here if we needed it
+}
+
 // Define the shape of the injected ethereum object
 declare global {
   interface Window {
-    ethereum: Eip1193Provider;
+    ethereum: MetaMaskEip1193Provider;
   }
 }
 
